@@ -1,0 +1,36 @@
+Solucionado:
+
+# Inicio: Va bien, simple, botones que llevan a secciones, nada mas
+
+# Misioneros: en la seccion de buscar hay un erropr ya que deja de buscar por cada caracter introducido, lo cual no debería ser así, debería
+poder poner la cantidad de texto que desee
+
+# Reuniones: bien, de momento no veo ningún error
+
+# Info extra: También va bien, no le veo nada raroide
+
+Pendiente: 
+
+# Beneficios: Ya entramos al primer problema, primero que nada, no permite clasificarlo según tipo de beneficio, y no hay un separador que ponga los beneficios activos arriba y los inactivos debajo.
+Al editarlos no hay nada raro, va bien. entro y me aparece: datos | pedidos empanadas | combos limpieza | movimientos | recuentos | compras.
+seamos sinceros, dependiendo el tipo de beneficio, me debe aparecer pedidos empanadas o combos limpieza, es decir; 
+si yo pongo que el tipo de beneficio esw venta de empanadas, pues al abrir no debería aparecerme lo de combos limpieza, con su respectivo formulario, y viceversa también.
+Hay que redefinir la logica en tipo de movimiento, ya que dependiento de si es egreso o ingreso, deberían salir opciones distintas en tipo de movimiento, 
+Lo de recuentos beneficios no recuerdo que era, pero se puede sacar, y que quede solo lo de movimientos, para registrar pagos de beneficios ahí, se entiende?
+
+# Misiones: ya arrancando de la abse, estaria bueno poder filtrar la mision por año y luego por mes, dejando todo como está, solamente agregando ese filtro a traves de un enumlist
+En inscriptos debería poder filtrarse por misión, no es lo mismo los inscriptos para san javier mayo 2026, que para san javier septiembre 2026, y un botón que a los inscriptos le genere la deuda de lo que vale la misión
+y automaticamente todos ellos van a la lista de deudores, luego ese cobro deuda se puede cobrar en la seccion de cobros/deudas, habiendo un botón que diga: pago  total de la deuda.
+y si la persona no paga el total, solo se descuenta de la deuda, lo que abone, se entiende?
+
+# Compras: en personas responsables me debería aparecer solo las personas que pertenecen al area de economía.. en tipo de compra debería aparecer un enumlist que diga lo siguiente:
+LIST("Supermercado","Verdulería","Carnicería","Panadería","Farmacia","Librería","Otros") 
+
+# Productos comprados: en categoria deberia salir LIST("Supermercado","Verdulería","Carnicería","Panadería","Farmacia","Librería","Otros") , en unidad debería salir
+LIST("kg","litros","unidad","paquete","caja","frasco","botella","bolsa","otro")
+En comprar deberia MAX(LIST(0,IF(ISBLANK([Necesitamos]), 0, [Necesitamos])-IF(ISBLANK([Tenemos]), 0, [Tenemos]))) que es eso? basicamente si necesito 5 y tengo 3 entonces solo debo comprar 2
+Precio unitario, subtotal y un comentario...
+
+# Deudores: que aparezca todo aquel que tiene una deuda y que no la ha pagado aún, mejorar lógica respecto a lo dicho anteriormente, gracias
+
+# Control generál: que funcione bien
