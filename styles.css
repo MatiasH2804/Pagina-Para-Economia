@@ -1,0 +1,1338 @@
+/* ==========================================================
+   01. VARIABLES Y RESET GLOBAL
+   Define colores base, box-sizing, body y tipografías.
+========================================================== */
+
+:root {
+  --bg: #f5f7fb;
+  --panel: #ffffff;
+  --line: #d9e0ea;
+  --text: #18202f;
+  --muted: #627086;
+  --accent: #1c7c54;
+  --accent-strong: #14613f;
+  --danger: #b42318;
+  --warning: #a15c07;
+  --readonly: #eef2f7;
+  --shadow: 0 10px 28px rgba(24, 32, 47, 0.10);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  background: var(--bg);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+/* ==========================================================
+   02. LAYOUT GENERAL
+   Header, shell principal, sidebar, content y view.
+========================================================== */
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.app-header p {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  min-height: calc(100vh - 65px);
+}
+
+.side-nav {
+  padding: 16px 10px;
+  border-right: 1px solid #1b1b1b;
+  background: #080808;
+  overflow-y: auto;
+}
+
+.content {
+  min-width: 0;
+  padding: 20px;
+}
+
+.view {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+/* Logo y bloque de marca del encabezado */
+.brand-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.brand-logo {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+  flex: 0 0 auto;
+  border-radius: 12px;
+}
+
+.brand-text {
+  min-width: 0;
+}
+
+.brand-text h1 {
+  margin: 0;
+}
+
+.brand-text p {
+  margin: 2px 0 0;
+}
+/* ==========================================================
+   03. BOTONES GENERALES
+   Estilo Uiverse para botones normales, primary, danger y ghost.
+========================================================== */
+
+button {
+  border: 1px solid #18202f;
+  border-radius: 999px;
+  padding: 0.72em 1.35em;
+  color: #18202f;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 0 #18202f;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  transition:
+    transform 0.22s ease-in-out,
+    box-shadow 0.22s ease-in-out,
+    background-color 0.22s ease-in-out,
+    color 0.22s ease-in-out,
+    border-color 0.22s ease-in-out;
+}
+
+button:hover {
+  transform: translateY(-4px) translateX(-2px);
+  box-shadow: 2px 5px 0 0 #18202f;
+}
+
+button:active {
+  transform: translateY(2px) translateX(1px);
+  box-shadow: 0 0 0 0 #18202f;
+}
+
+button.primary {
+  color: #ffffff;
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: 0 0 0 0 var(--accent-strong);
+}
+
+button.primary:hover {
+  color: #ffffff;
+  border-color: var(--accent-strong);
+  background: var(--accent-strong);
+  box-shadow: 2px 5px 0 0 #0f3d29;
+}
+
+button.danger {
+  color: #ffffff;
+  border-color: var(--danger);
+  background: var(--danger);
+  box-shadow: 0 0 0 0 #7f1d1d;
+}
+
+button.danger:hover {
+  color: #ffffff;
+  border-color: #7f1d1d;
+  background: #991b1b;
+  box-shadow: 2px 5px 0 0 #7f1d1d;
+}
+
+button.ghost {
+  color: var(--text);
+  border-color: var(--line);
+  background: transparent;
+}
+
+button.ghost:hover {
+  border-color: var(--text);
+  box-shadow: 2px 5px 0 0 var(--text);
+}
+
+/* ==========================================================
+   04. MENÚ LATERAL RDR
+   Radios animados del sidebar.
+========================================================== */
+
+.rdr-radio-demo {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+}
+
+.rdr-radio-option {
+  --rdr-red: #d00000;
+  --rdr-white: #f0f0f0;
+  --rdr-grey: #8c8c8c;
+
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 22em;
+  padding: 0.7em 1.1em;
+  cursor: pointer;
+  font-size: 14px;
+  user-select: none;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.rdr-radio-option input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.rdr-radio-option::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-left: 0.25em solid var(--rdr-white);
+  background: linear-gradient(90deg, rgba(0, 90, 208, 0.8), rgba(61, 243, 5, 0) 90%);
+  clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.rdr-radio-marker {
+  position: relative;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 1.5em;
+  height: 1.5em;
+  margin-right: 1em;
+  border: 0.12em solid var(--rdr-grey);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.rdr-radio-marker::after {
+  content: "";
+  position: absolute;
+  inset: -0.4em;
+  border: 0.12em dashed transparent;
+  border-radius: 50%;
+  transition: all 0.4s ease;
+}
+
+.rdr-x-mark {
+  position: absolute;
+  z-index: 10;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+}
+
+.rdr-x-path {
+  fill: none;
+  stroke: var(--rdr-red);
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 60;
+  stroke-dashoffset: 60;
+  filter: drop-shadow(0 0 0.1em rgba(0, 0, 0, 0.5));
+  opacity: 0.9;
+}
+
+.rdr-label-text {
+  position: relative;
+  color: var(--rdr-grey);
+  filter: contrast(1.2);
+  font-size: 0.92em;
+  font-weight: 900;
+  line-height: 1.25;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.rdr-radio-option:hover .rdr-radio-marker {
+  border-color: var(--rdr-white);
+  transform: scale(1.1);
+}
+
+.rdr-radio-option:hover .rdr-label-text {
+  color: var(--rdr-white);
+  transform: translateX(0.3em);
+}
+
+.rdr-radio-option input:checked + .rdr-radio-marker + .rdr-label-text {
+  color: var(--rdr-white);
+  text-shadow: 0.1em 0.1em 0 rgba(0, 0, 0, 0.5);
+  transform: translateX(0.45em);
+}
+
+.rdr-radio-option:has(input:checked)::before {
+  transform: scaleX(1);
+}
+
+.rdr-radio-option input:checked + .rdr-radio-marker {
+  border-color: var(--rdr-white);
+  background: transparent;
+  box-shadow: 0 0 0.8em rgba(255, 255, 255, 0.2);
+}
+
+.rdr-radio-option input:checked + .rdr-radio-marker::after {
+  border-color: rgba(255, 255, 255, 0.3);
+  animation: rdr-lock-on 4s linear infinite;
+}
+
+.rdr-radio-option input:checked + .rdr-radio-marker .rdr-x-path {
+  animation: rdr-slash 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.rdr-radio-option input:checked + .rdr-radio-marker .rdr-x-path.delay {
+  animation-delay: 0.1s;
+}
+
+.rdr-radio-option input:checked + .rdr-radio-marker::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 0.2em;
+  height: 0.2em;
+  border-radius: 50%;
+  background: var(--rdr-red);
+  box-shadow:
+    0 -1em 0 var(--rdr-red),
+    1em -0.8em 0 var(--rdr-red),
+    1em 0 0 var(--rdr-red),
+    -1em 0.5em 0 var(--rdr-red),
+    -0.8em -0.8em 0 var(--rdr-red);
+  animation: rdr-impact 0.4s ease-out forwards;
+}
+
+.rdr-radio-option input:focus-visible + .rdr-radio-marker {
+  outline: 0.12em solid var(--rdr-white);
+  outline-offset: 0.25em;
+}
+
+@keyframes rdr-slash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes rdr-lock-on {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  5% {
+    transform: rotate(45deg) scale(0.9);
+  }
+
+  10%,
+  100% {
+    transform: rotate(90deg) scale(1);
+  }
+}
+
+@keyframes rdr-impact {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(2);
+    opacity: 0;
+    box-shadow:
+      0 -2em 0 transparent,
+      2em -1.5em 0 transparent,
+      2em 0 0 transparent,
+      -2em 1em 0 transparent,
+      -1.5em -1.5em 0 transparent;
+  }
+}
+
+/* ==========================================================
+   05. VISTAS, TOOLBARS Y TARJETAS BASE
+   view-header, toolbar, home-grid, section-card, tabs, empty-state.
+========================================================== */
+
+.view-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.view-header h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.view-header p {
+  margin: 4px 0 0;
+  color: var(--muted);
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 18px 22px;
+  margin: 28px 0 14px;
+}
+
+.toolbar input,
+.toolbar select {
+  min-width: 180px;
+}
+
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 14px;
+}
+
+.home-button {
+  min-height: 96px;
+  padding: 18px;
+  text-align: left;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 0 0 0 #18202f;
+}
+
+.section-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px;
+  background: var(--panel);
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 16px;
+}
+
+.tab-button.active {
+  color: #fff;
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.empty-state {
+  padding: 22px;
+  border: 1px dashed #aab6c7;
+  border-radius: 8px;
+  color: var(--muted);
+  background: #fff;
+  text-align: center;
+}
+
+/* ==========================================================
+   06. FORMULARIOS Y MODALES
+   modal-root, eco-form, inputs dentro de formularios, checkbox groups.
+========================================================== */
+
+.modal-root {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 28px 14px;
+  overflow: auto;
+  background: rgba(15, 23, 42, 0.45);
+}
+
+.modal-root.hidden {
+  display: none;
+}
+
+.modal-panel {
+  width: min(920px, 100%);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+.modal-header,
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.modal-footer {
+  justify-content: flex-end;
+  border-top: 1px solid var(--line);
+  border-bottom: 0;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 12px;
+  padding: 16px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.field label {
+  color: #35435a;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 9px 10px;
+  color: var(--text);
+  background: #fff;
+}
+
+textarea {
+  min-height: 84px;
+  resize: vertical;
+}
+
+select[multiple] {
+  min-height: 132px;
+}
+
+.field-wide {
+  grid-column: 1 / -1;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+}
+
+.checkbox-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 34px;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #f8fafc;
+  cursor: pointer;
+}
+
+.checkbox-option input {
+  width: auto;
+  margin: 0;
+}
+
+.eco-form {
+  --eco-blue: #0b5ed7;
+  --eco-blue-dark: #063f91;
+  --eco-blue-soft: #e8f1ff;
+  --eco-white: #ffffff;
+  --eco-text: #18202f;
+
+  position: relative;
+  overflow: hidden;
+  width: min(980px, calc(100vw - 32px));
+  max-height: calc(100vh - 56px);
+  border: 2px solid var(--eco-blue-dark);
+  border-radius: 0.35em 1.5em 0.35em 1.5em;
+  background: var(--eco-white);
+  box-shadow:
+    -10px 0 0 var(--eco-blue-dark),
+    -10px 5px 5px rgba(0, 0, 0, 0.20),
+    0 18px 45px rgba(15, 23, 42, 0.25);
+  transition: all 0.25s ease;
+}
+
+.eco-form:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    -12px 0 0 var(--eco-blue-dark),
+    -12px 6px 8px rgba(0, 0, 0, 0.22),
+    0 22px 52px rgba(15, 23, 42, 0.30);
+}
+
+.eco-form-header,
+.eco-form-grid,
+.eco-form-footer {
+  position: relative;
+  z-index: 2;
+}
+
+.eco-form-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  min-height: 86px;
+  padding: 18px 22px;
+  color: var(--eco-white);
+  border-bottom: 0;
+}
+
+.eco-form-title-area {
+  display: grid;
+  gap: 2px;
+}
+
+.eco-form-title {
+  margin: 0;
+  color: var(--eco-white);
+  font-size: 1.55rem;
+  font-weight: 900;
+  letter-spacing: 0.09em;
+}
+
+.eco-form-subtitle {
+  margin: 0;
+  color: #dceaff;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.eco-form-close {
+  position: relative;
+  z-index: 3;
+  color: var(--eco-blue-dark);
+  border-color: var(--eco-white);
+  background: var(--eco-white);
+}
+
+.eco-form-close:hover {
+  color: var(--eco-white);
+  border-color: var(--eco-white);
+  background: var(--eco-blue-dark);
+  box-shadow: 2px 5px 0 0 #032b64;
+}
+
+.eco-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 16px;
+  max-height: calc(100vh - 235px);
+  padding: 22px;
+  overflow: auto;
+}
+
+.eco-form .field {
+  display: grid;
+  gap: 7px;
+}
+
+.eco-form .field label {
+  color: var(--eco-blue-dark);
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.eco-form input,
+.eco-form select,
+.eco-form textarea {
+  width: 100%;
+  min-height: 42px;
+  border: 2px solid var(--eco-blue);
+  border-radius: 0.65em;
+  padding: 0.7em 0.85em;
+  color: var(--eco-text);
+  background: var(--eco-white);
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.20);
+  font-size: 0.95rem;
+  font-weight: 600;
+  outline: none;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.eco-form textarea {
+  min-height: 94px;
+}
+
+.eco-form input:focus,
+.eco-form select:focus,
+.eco-form textarea:focus {
+  color: var(--eco-white);
+  border-color: var(--eco-white);
+  background: var(--eco-blue);
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 10px -5px rgba(0, 0, 0, 0.28),
+    0 0 0 3px rgba(11, 94, 215, 0.18);
+}
+
+.eco-form input::placeholder,
+.eco-form textarea::placeholder {
+  color: var(--eco-blue);
+  font-weight: 800;
+}
+
+.eco-form input:focus::placeholder,
+.eco-form textarea:focus::placeholder {
+  color: var(--eco-white);
+}
+
+.eco-form .checkbox-group {
+  border: 2px solid var(--eco-blue);
+  border-radius: 0.85em;
+  background: var(--eco-blue-soft);
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.15);
+}
+
+.eco-form .checkbox-option {
+  border: 2px solid rgba(11, 94, 215, 0.35);
+  color: var(--eco-blue-dark);
+  background: var(--eco-white);
+  font-weight: 800;
+}
+
+.eco-form .checkbox-option:hover {
+  border-color: var(--eco-blue);
+  background: #f4f8ff;
+}
+
+.eco-form .checkbox-option input {
+  width: auto;
+  min-height: auto;
+  box-shadow: none;
+  transform: none;
+}
+
+.eco-form-footer {
+  padding: 16px 22px 20px;
+  border-top: 1px solid rgba(11, 94, 215, 0.18);
+  background: rgba(232, 241, 255, 0.72);
+}
+
+.eco-form-submit {
+  color: var(--eco-white);
+  border: 2px solid var(--eco-blue);
+  background: var(--eco-blue);
+  font-weight: 900;
+}
+
+.eco-form-submit:hover {
+  border-color: var(--eco-blue-dark);
+  background: var(--eco-blue-dark);
+  box-shadow: 2px 5px 0 0 #032b64;
+}
+
+.eco-form-submit:active {
+  color: var(--eco-blue);
+  background: var(--eco-white);
+}
+
+.eco-form-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 86px;
+  background: var(--eco-blue);
+  box-shadow: inset 6px 0 var(--eco-blue-dark);
+  transition: all 0.5s ease;
+}
+
+.eco-form-whitefilter {
+  position: absolute;
+  top: 2.5px;
+  right: 2.5px;
+  z-index: 2;
+  width: 3.5em;
+  height: 3.5em;
+  border-top-right-radius: 1.25em;
+  box-shadow: 35px -35px 0 -1px white;
+  pointer-events: none;
+}
+
+.eco-form:focus-within .eco-form-bg {
+  height: 100%;
+  opacity: 0.08;
+}
+
+/* ==========================================================
+   07. FILTROS Y BÚSQUEDAS BRUTALIST
+   brutalist-container, brutalist-input, brutalist-label.
+========================================================== */
+
+.brutalist-container {
+  position: relative;
+  width: min(100%, 320px);
+  margin-top: 22px;
+  font-family: monospace;
+}
+
+.brutalist-input {
+  width: 100%;
+  min-width: 0;
+  border: 3px solid #000;
+  border-radius: 0;
+  padding: 14px 15px;
+  color: #000;
+  background-color: #fff;
+  box-shadow: 5px 5px 0 #000, 10px 10px 0 #4a90e2;
+  font-size: 15px;
+  font-weight: 800;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.brutalist-input:focus {
+  animation: focus-pulse 4s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
+}
+
+.brutalist-label {
+  position: absolute;
+  top: -32px;
+  left: -3px;
+  z-index: 1;
+  padding: 5px 10px;
+  color: #fff;
+  background-color: #000;
+  font-size: 13px;
+  font-weight: 900;
+  transform: rotate(-1deg);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.brutalist-input:focus + .brutalist-label {
+  background-color: #4a90e2;
+  transform: rotate(0deg) scale(1.05);
+}
+
+.brutalist-input::placeholder {
+  color: #888;
+  transition: color 0.3s ease;
+}
+
+.brutalist-input:focus::placeholder {
+  color: transparent;
+}
+
+@keyframes focus-pulse {
+  0%,
+  100% {
+    border-color: #000;
+  }
+
+  50% {
+    border-color: #4a90e2;
+  }
+}
+
+/* ==========================================================
+   08. CONTROL GENERAL
+   Tarjetas de ingresos, egresos y saldo.
+========================================================== */
+
+.readonly-banner {
+  display: inline-flex;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  padding: 7px 10px;
+  color: #46566d;
+  background: var(--readonly);
+  font-size: 13px;
+}
+
+.totals-grid,
+.control-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin: 14px 0 16px;
+}
+
+.total-box {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  background: #fff;
+}
+
+.total-box span {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.total-box strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 22px;
+}
+
+.control-card-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: 28px;
+  padding: 4px;
+  background: linear-gradient(to top right, #063f91, #0b5ed7 42%, #60a5fa 100%);
+  box-shadow: 0 10px 24px rgba(11, 94, 215, 0.16);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.control-card-container:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 34px rgba(11, 94, 215, 0.22);
+}
+
+.control-title-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  color: #ffffff;
+}
+
+.control-title-card p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.control-title-card svg {
+  width: 22px;
+  height: 22px;
+}
+
+.control-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  height: 100%;
+  border-radius: 24px;
+  padding: 18px;
+  color: #18202f;
+  background-color: #ffffff;
+}
+
+.control-card-title {
+  margin: 0;
+  color: #18202f;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+
+.control-card-amount {
+  margin: 0;
+  color: #000000;
+  font-size: 34px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.control-card-description {
+  margin: 0;
+  color: #4b5563;
+  font-size: 13px;
+}
+
+/* ==========================================================
+   09. TABLAS TIPO EXCEL
+   datatable-card, excel-data-table, row-actions, pending rows.
+========================================================== */
+
+.datatable-card {
+  width: 100%;
+  margin-top: 16px;
+  border: 1px solid #dbe3ef;
+  border-radius: 18px;
+  padding: 18px;
+  background: #ffffff;
+  box-shadow: 0 12px 28px rgba(24, 32, 47, 0.08);
+}
+
+.datatable-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.datatable-header h3 {
+  margin: 0;
+  color: #111827;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.datatable-header p {
+  margin: 4px 0 0;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.table-wrap,
+.datatable-wrap {
+  overflow: auto;
+  border: 1px solid #cbd5e1;
+  border-radius: 14px;
+  background: #ffffff;
+}
+
+.excel-data-table {
+  width: 100%;
+  min-width: 860px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #ffffff;
+}
+
+.excel-data-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  border-right: 1px solid #cbd5e1;
+  border-bottom: 2px solid #94a3b8;
+  padding: 13px 14px;
+  color: #0f172a;
+  background: #eaf2ff;
+  font-size: 13px;
+  font-weight: 900;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.excel-data-table thead th:last-child,
+.excel-data-table tbody td:last-child {
+  border-right: 0;
+}
+
+.excel-data-table tbody td {
+  border-right: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 11px 14px;
+  color: #111827;
+  background: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+.excel-data-table tbody tr:nth-child(even) td {
+  background: #f8fbff;
+}
+
+.excel-data-table tbody tr:hover td {
+  background: #e8f1ff;
+}
+
+.excel-data-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.excel-data-table a {
+  color: #0b5ed7;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.excel-data-table a:hover {
+  text-decoration: underline;
+}
+
+.row-actions,
+.excel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.excel-actions {
+  min-width: 220px;
+  white-space: nowrap;
+}
+
+.excel-actions button {
+  padding: 0.55em 0.9em;
+  font-size: 12px;
+}
+
+.pending-row {
+  opacity: 0.85;
+}
+
+.pending-row td {
+  background: #fff7ed !important;
+}
+
+.pending-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  margin-right: 6px;
+  border-radius: 999px;
+  padding: 3px 8px;
+  color: var(--warning);
+  background: #fff3cd;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ==========================================================
+   10. ESTADOS, MENSAJES Y RESPONSIVE
+   status-pill, message, sync-status, pending-badge y media queries.
+========================================================== */
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  border-radius: 999px;
+  padding: 5px 10px;
+  color: var(--muted);
+  background: #eef2f7;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.status-pill.ok {
+  color: #0f5132;
+  background: #dff3e8;
+}
+
+.status-pill.error {
+  color: #842029;
+  background: #f8d7da;
+}
+
+.status-pill.cache {
+  color: var(--warning);
+  background: #fff3cd;
+}
+
+.message,
+.sync-status {
+  margin-bottom: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: #fff;
+}
+
+.sync-status {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.message.error,
+.sync-status.error {
+  color: #842029;
+  border-color: #f5c2c7;
+  background: #f8d7da;
+}
+
+.message.warning,
+.sync-status.pending,
+.sync-status.syncing {
+  color: var(--warning);
+  border-color: #ffecb5;
+  background: #fff3cd;
+}
+
+.message.ok,
+.sync-status.ok {
+  color: #0f5132;
+  border-color: #badbcc;
+  background: #dff3e8;
+}
+
+@media (max-width: 800px) {
+  .app-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .app-shell {
+    grid-template-columns: 1fr;
+    .brand-logo {
+  width: 40px;
+  height: 40px;
+}
+
+.brand-block {
+  align-items: center;
+}
+  }
+
+  .side-nav {
+    position: sticky;
+    top: 83px;
+    z-index: 4;
+    padding: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-right: 0;
+    border-bottom: 1px solid #1b1b1b;
+    background: #080808;
+  }
+
+  .rdr-radio-demo {
+    display: flex;
+    gap: 6px;
+    min-width: max-content;
+  }
+
+  .rdr-radio-option {
+    width: auto;
+    min-width: 170px;
+    margin-bottom: 0;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .content {
+    padding: 14px;
+  }
+
+  .view-header,
+  .datatable-header,
+  .eco-form-header {
+    flex-direction: column;
+  }
+
+  .toolbar {
+    gap: 24px;
+  }
+
+  .brutalist-container {
+    width: 100%;
+  }
+
+  .eco-form {
+    width: calc(100vw - 24px);
+    max-height: calc(100vh - 32px);
+    box-shadow:
+      -6px 0 0 var(--eco-blue-dark),
+      -6px 4px 5px rgba(0, 0, 0, 0.18),
+      0 16px 36px rgba(15, 23, 42, 0.25);
+  }
+
+  .eco-form-header {
+    min-height: 106px;
+    padding: 16px;
+  }
+
+  .eco-form-title {
+    font-size: 1.28rem;
+  }
+
+  .eco-form-grid {
+    grid-template-columns: 1fr;
+    max-height: calc(100vh - 260px);
+    padding: 16px;
+  }
+
+  .eco-form-footer {
+    flex-wrap: wrap;
+    padding: 14px 16px;
+  }
+
+  .control-cards-grid,
+  .totals-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .control-card-amount {
+    font-size: 28px;
+  }
+
+  .datatable-card {
+    border-radius: 14px;
+    padding: 12px;
+  }
+
+  .datatable-header h3 {
+    font-size: 17px;
+  }
+
+  .excel-data-table {
+    min-width: 760px;
+  }
+
+  .excel-data-table thead th,
+  .excel-data-table tbody td {
+    padding: 10px;
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Economía y Logística | Base Datos</title>
+
+<link
+  rel="icon"
+  type="image/png"
+  href="https://raw.githubusercontent.com/MatiasH2804/Pagina-Para-Economia/main/Grupo%20Misionero%20%281%29.png"
+/>
+
+<link
+  rel="apple-touch-icon"
+  href="https://raw.githubusercontent.com/MatiasH2804/Pagina-Para-Economia/main/Grupo%20Misionero%20%281%29.png"
+/>
+
+<link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="app-header">
+  <div class="brand-block">
+    <img
+      class="brand-logo"
+      src="https://raw.githubusercontent.com/MatiasH2804/Pagina-Para-Economia/main/Grupo%20Misionero%20%281%29.png"
+      alt="Logo Grupo Misionero"
+    />
+
+    <div class="brand-text">
+      <h1>Economía y Logística</h1>
+      <p>Base Datos</p>
+    </div>
+  </div>
+      <div class="header-actions">
+        <span id="connectionStatus" class="status-pill">Conectando...</span>
+        <button id="syncButton" type="button">Sincronizar</button>
+      </div>
+    </header>
+
+    <div class="app-shell">
+      <nav id="sideNav" class="side-nav" aria-label="Secciones"></nav>
+      <main class="content">
+        <div id="messageHost"></div>
+        <section id="appRoot" class="view">
+          <div class="empty-state">Conectando...</div>
+        </section>
+      </main>
+    </div>
+
+    <div id="modalRoot" class="modal-root hidden" aria-hidden="true"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
